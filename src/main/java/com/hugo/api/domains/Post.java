@@ -17,8 +17,8 @@ public class Post implements Serializable{
     private Integer id;
     private String titulo;
     private String conteudo;
-    private Integer up;
-    private Integer down;
+    private Integer up = 0;
+    private Integer down = 0;
     private Date data;
 
     public Post() { }
@@ -47,9 +47,7 @@ public class Post implements Serializable{
         return up;
     }
 
-    public Integer getDown() {
-        return down;
-    }
+    public Integer getDown() { return down; }
 
     public Date getData() {
         return data;

@@ -4,6 +4,8 @@ import com.hugo.api.domains.Post;
 import com.hugo.api.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,14 +20,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/posts")
+@CrossOrigin(origins = "*")
 public class PostResource {
 
     @Autowired
     private PostService service;
-    private Integer id;
-    private Integer action;
 
     @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public ResponseEntity<?> findAll(){
         List<Post> posts = service.findAll();
 
@@ -57,11 +59,7 @@ public class PostResource {
 
     @RequestMapping(value = "/{id}/{action}", method = RequestMethod.POST)
     public ResponseEntity<Void> upDown(@PathVariable Integer id, @PathVariable Integer action){
-        if(action == 1) {
-            service.up(id);
-        }else {
-            service.down(id);
-        }
+        Post post = action == 1 ? service.up(id) : service.down(id);
 
         return ResponseEntity.noContent().build();
     }

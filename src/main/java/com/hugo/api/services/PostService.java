@@ -6,6 +6,7 @@ import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,6 +29,9 @@ public class PostService {
 
     public Post insert(Post post){
         post.setId(null);
+
+        Date dataAtual = new Date();
+        post.setData(dataAtual);
         return repository.save(post);
     }
 
@@ -38,15 +42,15 @@ public class PostService {
 
     public Post up(Integer id){
         Post post = findOne(id);
-        //Integer up = (post.getUp() | 0) + 1;
-        post.setUp(1);
+        Integer up = post.getUp() + 1;
+        post.setUp(up);
         return repository.save(post);
     }
 
     public Post down(Integer id){
         Post post = findOne(id);
-        //Integer down = (post.getDown() | 0) + 1;
-        post.setDown(1);
+        Integer down = post.getDown() + 1;
+        post.setDown(down);
         return repository.save(post);
     }
 }
